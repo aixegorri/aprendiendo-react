@@ -6,6 +6,7 @@ import { TURNS } from './constants.js'
 import { checkWinnerFrom, checkEndGame } from './logic/board.js'
 import { WinnerModal } from './components/WinnerModal.jsx'
 import { saveGameToStorage, resetGameStorage } from './logic/storage/index.js'
+import { createPortal } from 'react-dom'
 
 function App () {
   const [board, setBoard] = useState(() => {
@@ -57,11 +58,22 @@ function App () {
   }
 
   return (
-    <main className='board'>
-      <h1>Tic tac toe</h1>
-      <button onClick={resetGame}>Reset del juego</button>
-      <section className='game'>
-        {
+    <main className='main'>
+      <div className='container'>
+        <h1 className='main__title'>Tres en raya</h1>
+
+        <section className='turn'>
+          <h5 className='turn__title'>Turno</h5>
+          <Square isSelected={turn === TURNS.X}>
+            {TURNS.X}
+          </Square>
+          <Square isSelected={turn === TURNS.O}>
+            {TURNS.O}
+          </Square>
+        </section>
+
+        <section className='board'>
+          {
           board.map((square, index) => {
             return (
               <Square
@@ -74,18 +86,12 @@ function App () {
             )
           })
         }
-      </section>
+        </section>
 
-      <section className='turn'>
-        <Square isSelected={turn === TURNS.X}>
-          {TURNS.X}
-        </Square>
-        <Square isSelected={turn === TURNS.O}>
-          {TURNS.O}
-        </Square>
-      </section>
+        <button className='btn btn-reset' onClick={resetGame}>Reiniciar juego</button>
 
-      <WinnerModal resetGame={resetGame} winner={winner} />
+        {createPortal(<WinnerModal resetGame={resetGame} winner={winner} />, document.getElementById('root'))}
+      </div>
     </main>
   )
 }
