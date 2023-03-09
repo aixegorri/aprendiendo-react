@@ -71,7 +71,7 @@ body {
 .main__title {
   color: var(--white);
   margin-bottom: 1rem;
-  text-shadow: 4px 4px 0px var(--green);
+  text-shadow: 4px 4px 0px var(--green-dark);
   text-transform: uppercase;
   font-weight: 800;
 }
